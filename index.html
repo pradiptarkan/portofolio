@@ -1,35 +1,740 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Home - Arkan Ridho Pradipta | Digital Product & Business Analyst</title>
-    <div id="head-placeholder"></div>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arkan Ridho Pradipta — Digital Product & Business Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0e0e0e;
+    --paper: #f5f2ed;
+    --paper-warm: #ede9e0;
+    --accent: #c8522a;
+    --accent-light: #f0d5c8;
+    --muted: #7a7469;
+    --border: rgba(14,14,14,0.12);
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 3rem;
+    background: rgba(245,242,237,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  .nav-cta {
+    background: var(--ink);
+    color: var(--paper) !important;
+    padding: 0.45rem 1.2rem;
+    border-radius: 100px;
+    font-size: 0.8rem !important;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--accent) !important; color: #fff !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding-top: 5rem;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    padding: 5rem 3rem 5rem 4rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 440px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary-hero {
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    padding: 0.8rem 2rem;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-primary-hero:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-secondary-hero {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-secondary-hero:hover { color: var(--accent); border-color: var(--accent); }
+
+  .hero-right {
+    height: 100vh;
+    position: relative;
+    background: var(--paper-warm);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .hero-img-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  .hero-img {
+    width: 100%;
+    display: block;
+    filter: grayscale(15%);
+    mix-blend-mode: multiply;
+  }
+  .hero-tag {
+    position: absolute;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+  }
+  .hero-tag-1 { top: 2rem; left: -1rem; }
+  .hero-tag-2 { bottom: 3rem; right: -1rem; background: var(--accent); }
+  .hero-bg-text {
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--serif);
+    font-size: 10rem;
+    color: rgba(14,14,14,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -0.05em;
+    font-style: italic;
+  }
+
+  /* ── MARQUEE STRIP ── */
+  .marquee-strip {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.9rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 22s linear infinite;
+  }
+  .marquee-inner span {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0 2.5rem;
+    opacity: 0.7;
+  }
+  .marquee-inner .dot {
+    color: var(--accent);
+    opacity: 1;
+    margin: 0 0.5rem;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 4rem; }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--paper-warm);
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+  .stat-cell {
+    background: var(--paper-warm);
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2.8rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    display: block;
+  }
+  .stat-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; letter-spacing: 0.05em; }
+
+  .about-body p {
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.85;
+    margin-bottom: 1.2rem;
+    font-size: 1.05rem;
+  }
+  .about-body p strong { color: var(--ink); font-weight: 500; }
+
+  /* ── EXPERTISE ── */
+  #expertise { background: var(--paper); }
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .expertise-card {
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+    background: var(--paper);
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .expertise-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .expertise-card:hover::before { transform: scaleX(1); }
+  .expertise-card:hover {
+    border-color: rgba(200,82,42,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(14,14,14,0.08);
+  }
+  .expertise-num {
+    font-family: var(--serif);
+    font-size: 3rem;
+    color: rgba(14,14,14,0.06);
+    line-height: 1;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+  .expertise-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--accent-light);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .expertise-icon svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .expertise-card h3 {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .expertise-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .expertise-list li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .expertise-list li::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ── EDUCATION ── */
+  #education {
+    background: var(--paper-warm);
+  }
+  .edu-card {
+    max-width: 760px;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    padding: 2.5rem;
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  .edu-year {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--accent);
+    font-style: italic;
+    white-space: nowrap;
+    padding-top: 0.2rem;
+    border-right: 1px solid var(--border);
+    padding-right: 2rem;
+  }
+  .edu-body h3 {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.01em;
+  }
+  .edu-school { font-size: 0.875rem; color: var(--muted); margin-bottom: 0.75rem; }
+  .edu-gpa {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    letter-spacing: 0.04em;
+    margin-bottom: 1rem;
+  }
+  .edu-thesis {
+    font-size: 0.875rem;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.6;
+    border-left: 2px solid var(--accent-light);
+    padding-left: 1rem;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+  }
+  #contact .section-label { justify-content: center; color: rgba(245,242,237,0.5); }
+  #contact .section-label::after { background: rgba(245,242,237,0.3); }
+  #contact .section-title { color: var(--paper); }
+  #contact .section-title em { color: var(--accent); }
+  .contact-sub {
+    font-size: 1rem;
+    color: rgba(245,242,237,0.55);
+    max-width: 460px;
+    margin: 1rem auto 3rem;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    padding: 0.75rem 1.75rem;
+    border-radius: 100px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .contact-btn-primary { background: var(--accent); color: #fff; }
+  .contact-btn-primary:hover { background: #b54520; transform: translateY(-1px); }
+  .contact-btn-outline { border: 1px solid rgba(245,242,237,0.25); color: var(--paper); }
+  .contact-btn-outline:hover { border-color: rgba(245,242,237,0.6); background: rgba(245,242,237,0.08); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(245,242,237,0.08);
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: rgba(245,242,237,0.3);
+  }
+  footer a { color: rgba(245,242,237,0.4); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 6rem 1.5rem 3rem; }
+    .hero-right { height: 55vw; }
+    #about { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2rem; }
+    section { padding: 4rem 1.5rem; }
+    .expertise-grid { grid-template-columns: 1fr; }
+    .edu-card { grid-template-columns: 1fr; gap: 1rem; }
+    .edu-year { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 1rem; padding-right: 0; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+  }
+</style>
 </head>
-<body class="d-flex flex-column h-100">
-    <div class="wrapper">
-        <div id="navbar-placeholder"></div>
+<body>
 
-        <section class="hero-section">
-            <div class="container hero-content py-5">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 order-lg-2 text-center mb-4 mb-lg-0 animate-on-scroll">
-                        <img src="https://avatars.githubusercontent.com/u/172613538?v=4" class="img-fluid hero-image shadow-lg" alt="Arkan Ridho Pradipta">
-                    </div>
-                    <div class="col-lg-6 order-lg-1 text-center text-lg-start pe-lg-5 stagger-children">
-                        <h1 class="display-3 fw-bold mb-4">Hi, I'm Arkan Ridho Pradipta</h1>
-                        <p class="lead mb-5">A Digital Product & Business Analyst with expertise in telecommunications and digital platforms. I bridge the gap between complex technical systems and strategic business goals.</p>
-                        <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3">
-                            <a href="projects.html" class="btn btn-primary btn-lg px-5 py-3">View My Work</a>
-                            <a href="contact.html" class="btn btn-outline-primary btn-lg px-5 py-3">Get in Touch</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Arkan Ridho Pradipta</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Digital Product & Business Analyst</div>
+    <h1 class="hero-name">
+      Arkan<br><em>Ridho</em><br>Pradipta
+    </h1>
+    <p class="hero-desc">
+      Bridging the gap between complex technical systems and strategic business goals — with 3+ years in telecommunications and digital platforms.
+    </p>
+    <div class="hero-actions">
+      <a href="#expertise" class="btn-primary-hero">
+        View My Work
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="CV_Arkan_Ridho_Pradipta.pdf" class="btn-secondary-hero" download>
+        Download CV
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </a>
     </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-bg-text">Analyst</div>
+    <div class="hero-img-wrap">
+      <img src="https://avatars.githubusercontent.com/u/172613538?v=4" class="hero-img" alt="Arkan Ridho Pradipta">
+      <span class="hero-tag hero-tag-1">Based in Indonesia</span>
+      <span class="hero-tag hero-tag-2">Open to Work</span>
+    </div>
+  </div>
+</section>
 
-    <!-- Placeholder Footer: Div ini memuat konten footer secara dinamis dari _footer.html -->
-    <div id="footer-placeholder"></div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span>Business Analysis</span><span class="dot">✦</span>
+    <span>Technical Writing</span><span class="dot">✦</span>
+    <span>Quality Assurance</span><span class="dot">✦</span>
+    <span>UML Diagramming</span><span class="dot">✦</span>
+    <span>Figma</span><span class="dot">✦</span>
+    <span>SQL</span><span class="dot">✦</span>
+    <span>Postman</span><span class="dot">✦</span>
+    <span>Product Management</span><span class="dot">✦</span>
+    <span>Business Analysis</span><span class="dot">✦</span>
+    <span>Technical Writing</span><span class="dot">✦</span>
+    <span>Quality Assurance</span><span class="dot">✦</span>
+    <span>UML Diagramming</span><span class="dot">✦</span>
+    <span>Figma</span><span class="dot">✦</span>
+    <span>SQL</span><span class="dot">✦</span>
+    <span>Postman</span><span class="dot">✦</span>
+    <span>Product Management</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-left fade-up">
+    <div class="section-label">Who I am</div>
+    <h2 class="section-title">The person<br>behind the <em>work</em></h2>
+    <div class="about-stats">
+      <div class="stat-cell">
+        <span class="stat-num">3+</span>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">IT</span>
+        <div class="stat-label">Industry Focus</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">BA</span>
+        <div class="stat-label">Core Role</div>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">QA</span>
+        <div class="stat-label">Also Practiced</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-body fade-up">
+    <p>With over <strong>3 years of experience</strong> in the IT industry as a Business Analyst, Technical Writer, and Quality Assurance professional, I excel in developing systems tailored to user needs.</p>
+    <p>My technical writing expertise enables me to efficiently <strong>identify customer requirements</strong>, while my quality assurance background allows me to anticipate potential issues, ensuring seamless project execution.</p>
+    <p>I am particularly drawn to the intersection of <strong>telecommunications, digital platforms, and product strategy</strong> — spaces where clarity of thought directly translates to better user outcomes.</p>
+    <div style="margin-top: 2rem;">
+      <a href="#contact" class="btn-primary-hero" style="display: inline-flex;">Let's Connect →</a>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+  <div class="fade-up">
+    <div class="section-label">Skills</div>
+    <h2 class="section-title">My <em>expertise</em></h2>
+    <p style="color: var(--muted); max-width: 480px; font-weight: 300; margin-top: 0.5rem;">A structured blend of technical foundation, product tools, and analytical thinking.</p>
+  </div>
+  <div class="expertise-grid">
+    <div class="expertise-card fade-up">
+      <div class="expertise-num">01</div>
+      <div class="expertise-icon">
+        <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      </div>
+      <h3>Technical Foundation</h3>
+      <ul class="expertise-list">
+        <li>SQL</li>
+        <li>PHP</li>
+        <li>HTML & CSS</li>
+      </ul>
+    </div>
+    <div class="expertise-card fade-up">
+      <div class="expertise-num">02</div>
+      <div class="expertise-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </div>
+      <h3>Product & Management</h3>
+      <ul class="expertise-list">
+        <li>Figma</li>
+        <li>Postman</li>
+        <li>Asana / Odoo Project</li>
+        <li>Microsoft Office Suite</li>
+      </ul>
+    </div>
+    <div class="expertise-card fade-up">
+      <div class="expertise-num">03</div>
+      <div class="expertise-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="21"/><line x1="3" y1="12" x2="9" y2="12"/><line x1="15" y1="12" x2="21" y2="12"/></svg>
+      </div>
+      <h3>Analysis & Design</h3>
+      <ul class="expertise-list">
+        <li>UML Diagramming</li>
+        <li>draw.io / Lucidchart</li>
+        <li>Adobe Creative Suite</li>
+        <li>CorelDraw</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="fade-up">
+    <div class="section-label">Background</div>
+    <h2 class="section-title">Education</h2>
+  </div>
+  <div class="edu-card fade-up">
+    <div class="edu-year">May 2022</div>
+    <div class="edu-body">
+      <h3>Bachelor of Information System</h3>
+      <p class="edu-school">University of Atma Jaya Yogyakarta</p>
+      <span class="edu-gpa">GPA 2.83 / 4.00</span>
+      <p class="edu-thesis">
+        Final Paper: Analisis Faktor Penerimaan Teknologi Aplikasi Microsoft Teams untuk Karyawan PT. United Tractors dengan Model UTAUT
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Say hello</div>
+  <h2 class="section-title">Let's work <em>together</em></h2>
+  <p class="contact-sub">I'm currently open to new opportunities. Whether you have a project, a question, or just want to connect — my inbox is always open.</p>
+  <div class="contact-links">
+    <a href="mailto:pradiptarkan@gmail.com" class="contact-btn contact-btn-primary">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Send an Email
+    </a>
+    <a href="CV_Arkan_Ridho_Pradipta.pdf" class="contact-btn contact-btn-outline" download>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download CV
+    </a>
+    <a href="https://github.com/pradiptarkan" class="contact-btn contact-btn-outline" target="_blank">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      GitHub
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Arkan Ridho Pradipta</span>
+  <span>Built with care · <a href="https://github.com/pradiptarkan/portofolio">View Source</a></span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) { el.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
