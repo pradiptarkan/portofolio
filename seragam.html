@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Seragam Hari Ini – UI Recommendation</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --teal: #1A8C8C;
+    --teal-dark: #156E6E;
+    --teal-light: #E8F5F5;
+    --teal-mid: #2AACAC;
+    --accent-orange: #F97316;
+    --accent-green: #22C55E;
+    --accent-red: #EF4444;
+    --accent-amber: #F59E0B;
+    --text-dark: #1A2332;
+    --text-mid: #4B5563;
+    --text-light: #9CA3AF;
+    --bg: #F4F7F9;
+    --white: #FFFFFF;
+    --card-shadow: 0 2px 12px rgba(26,140,140,0.10);
+    --radius: 16px;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #E8EDEF;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 32px 16px;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .phone-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    background: white;
+    border-radius: 100px;
+    padding: 6px 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .phone {
+    width: 375px;
+    background: var(--bg);
+    border-radius: 44px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.22), 0 0 0 1px rgba(0,0,0,0.06);
+    position: relative;
+  }
+
+  /* STATUS BAR */
+  .status-bar {
+    background: var(--teal-dark);
+    padding: 14px 24px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .status-bar .time { color: white; font-size: 15px; font-weight: 700; }
+  .status-bar .icons { display: flex; gap: 6px; align-items: center; }
+  .status-bar .icons span { color: white; font-size: 12px; }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(160deg, var(--teal-dark) 0%, var(--teal) 100%);
+    padding: 12px 20px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header-user { display: flex; align-items: center; gap: 10px; }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, #5CC8C8, #1A6E6E);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 800; color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+  }
+  .header-user-name { color: white; font-weight: 700; font-size: 14px; }
+  .header-user-role { color: rgba(255,255,255,0.7); font-size: 12px; }
+  .bell { color: white; font-size: 20px; }
+
+  /* ATTENDANCE CARD */
+  .attendance-card {
+    margin: 0 16px;
+    background: white;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    top: -10px;
+  }
+  .att-child { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .child-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #5CC8C8, #1A8C8C);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800; color: white;
+  }
+  .child-name { font-weight: 700; font-size: 14px; color: var(--text-dark); }
+  .child-class { font-size: 12px; color: var(--text-light); }
+  .att-info { font-size: 11px; color: var(--text-light); margin-bottom: 6px; }
+  .att-status { display: flex; justify-content: space-between; align-items: center; }
+  .att-status-text { font-weight: 700; font-size: 16px; color: var(--teal); }
+  .att-checkin { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+  .att-check { color: var(--teal); font-size: 20px; }
+
+  /* SCROLL AREA */
+  .scroll-area { background: var(--bg); padding: 0 16px; padding-bottom: 90px; }
+
+  /* ====================== */
+  /* UNIFORM CARD – NEW     */
+  /* ====================== */
+  .uniform-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 0;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 16px;
+    overflow: hidden;
+    border: 1.5px solid rgba(26,140,140,0.12);
+    animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .uniform-card-header {
+    background: linear-gradient(110deg, var(--teal) 0%, #0F9090 100%);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .uniform-card-header-left { display: flex; align-items: center; gap: 8px; }
+  .uniform-icon-wrap {
+    width: 32px; height: 32px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+  }
+  .uniform-card-title { color: white; font-weight: 700; font-size: 13px; }
+  .uniform-card-date { color: rgba(255,255,255,0.75); font-size: 11px; margin-top: 1px; }
+  .uniform-badge {
+    background: rgba(255,255,255,0.22);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 100px;
+    letter-spacing: 0.04em;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .uniform-card-body {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .uniform-visual {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(145deg, #E8F7F7 0%, #C8EDED 100%);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid rgba(26,140,140,0.15);
+    position: relative;
+    overflow: hidden;
+  }
+  .uniform-visual::before {
+    content: '';
+    position: absolute;
+    top: -10px; right: -10px;
+    width: 40px; height: 40px;
+    background: rgba(26,140,140,0.08);
+    border-radius: 50%;
+  }
+  .uniform-emoji { font-size: 30px; line-height: 1; }
+  .uniform-color-dot-row { display: flex; gap: 3px; margin-top: 4px; }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+  }
+
+  .uniform-info { flex: 1; }
+  .uniform-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+  }
+  .uniform-desc {
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .uniform-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 10.5px; font-weight: 600;
+    padding: 4px 9px;
+    border-radius: 100px;
+  }
+  .tag-white {
+    background: var(--teal-light);
+    color: var(--teal-dark);
+  }
+  .tag-grey {
+    background: #F1F5F9;
+    color: var(--text-mid);
+  }
+  .tag-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+  .uniform-footer {
+    border-top: 1px solid #F1F5F9;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #FAFCFC;
+  }
+  .uniform-footer-icon { font-size: 13px; }
+  .uniform-footer-text { font-size: 11px; color: var(--text-mid); flex: 1; }
+  .uniform-footer-link { font-size: 11px; color: var(--teal); font-weight: 700; }
+
+  /* MENU GRID */
+  .menu-grid {
+    background: white;
+    border-radius: var(--radius);
+    padding: 16px 12px;
+    margin-bottom: 16px;
+    box-shadow: var(--card-shadow);
+  }
+  .grid-row { display: flex; justify-content: space-around; margin-bottom: 16px; }
+  .grid-row:last-child { margin-bottom: 0; }
+  .grid-item { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+  .grid-icon {
+    width: 48px; height: 48px;
+    background: var(--teal-light);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .grid-label { font-size: 11px; color: var(--text-mid); font-weight: 600; text-align: center; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+    margin-top: 4px;
+  }
+
+  /* GRADES */
+  .grades-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    box-shadow: var(--card-shadow);
+  }
+  .grade-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #F1F5F9; }
+  .grade-row:last-child { border-bottom: none; }
+  .grade-subject { font-size: 13px; font-weight: 600; color: var(--text-dark); }
+  .grade-time { font-size: 11px; color: var(--text-light); }
+  .grade-badge {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; color: white;
+  }
+  .grade-green { background: var(--accent-green); }
+  .grade-amber { background: var(--accent-amber); }
+  .see-all {
+    background: var(--teal);
+    color: white; width: 100%; border: none; border-radius: 12px;
+    padding: 12px; font-size: 13px; font-weight: 700; margin-top: 12px;
+    cursor: pointer; font-family: inherit;
+  }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: white;
+    border-top: 1px solid #F1F5F9;
+    display: flex;
+    padding: 10px 0 20px;
+    border-radius: 0 0 44px 44px;
+  }
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  }
+  .nav-icon { font-size: 20px; }
+  .nav-label { font-size: 10px; color: var(--text-light); font-weight: 600; }
+  .nav-item.active .nav-label { color: var(--teal); }
+  .nav-active-dot { width: 4px; height: 4px; background: var(--teal); border-radius: 50%; }
+
+  /* ANNOTATION PANEL */
+  .annotation-panel {
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 8px;
+  }
+
+  .anno-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1.3;
+  }
+  .anno-subtitle {
+    font-size: 13px;
+    color: var(--text-mid);
+    margin-top: 4px;
+    line-height: 1.6;
+  }
+
+  .anno-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .anno-card-title {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--teal);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .anno-item {
+    display: flex; gap: 10px; margin-bottom: 12px;
+  }
+  .anno-item:last-child { margin-bottom: 0; }
+  .anno-num {
+    width: 22px; height: 22px; flex-shrink: 0;
+    background: var(--teal);
+    color: white; border-radius: 50%;
+    font-size: 11px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .anno-text { font-size: 12.5px; color: var(--text-mid); line-height: 1.55; }
+  .anno-text strong { color: var(--text-dark); }
+
+  .variant-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .variant-chip {
+    padding: 6px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .chip-a { background: #E8F7F7; color: var(--teal-dark); border: 1.5px solid var(--teal); }
+  .chip-b { background: #FFF7ED; color: #C2410C; border: 1.5px solid #FED7AA; }
+  .chip-c { background: #F0FDF4; color: #15803D; border: 1.5px solid #BBF7D0; }
+
+  .color-swatch-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+  .swatch {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--text-mid); font-weight: 600;
+  }
+  .swatch-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(0,0,0,0.08); }
+
+  hr.divider { border: none; border-top: 1px solid #F1F5F9; margin: 4px 0; }
+
+  @media (max-width: 800px) {
+    body { flex-direction: column; align-items: center; }
+    .annotation-panel { width: 375px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PHONE MOCKUP -->
+<div class="phone-wrapper">
+  <div class="label">✦ Redesigned UI</div>
+  <div class="phone" style="max-height: 820px; overflow-y: auto; overflow-x: hidden; scrollbar-width: none;">
+
+    <!-- STATUS BAR -->
+    <div class="status-bar">
+      <span class="time">9:41</span>
+      <div class="icons">
+        <span>▲▲▲</span>
+        <span>WiFi</span>
+        <span>🔋</span>
+      </div>
+    </div>
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-user">
+        <div class="avatar">ES</div>
+        <div>
+          <div class="header-user-name">Endank Soekaja</div>
+          <div class="header-user-role">Orang tua</div>
+        </div>
+      </div>
+      <div class="bell">🔔</div>
+    </div>
+
+    <!-- ATTENDANCE -->
+    <div style="padding: 0 16px; margin-top: -8px;">
+      <div class="attendance-card">
+        <div class="att-child">
+          <div class="child-avatar">AR</div>
+          <div>
+            <div class="child-name">Ahmad Rizki</div>
+            <div class="child-class">X MIPA B</div>
+          </div>
+        </div>
+        <div class="att-info">Absensi Hari Ini | Senin, 23 Februari 2026</div>
+        <div class="att-status">
+          <div>
+            <div class="att-status-text">Hadir di Sekolah</div>
+            <div class="att-checkin">Check-in: 07:10:40</div>
+          </div>
+          <div class="att-check">✅</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCROLL CONTENT -->
+    <div class="scroll-area" style="padding-top: 8px;">
+
+      <!-- ✨ NEW: UNIFORM CARD -->
+      <div class="uniform-card">
+        <div class="uniform-card-header">
+          <div class="uniform-card-header-left">
+            <div class="uniform-icon-wrap">👕</div>
+            <div>
+              <div class="uniform-card-title">Seragam Hari Ini</div>
+              <div class="uniform-card-date">Senin, 23 Februari 2026</div>
+            </div>
+          </div>
+          <div class="uniform-badge">WAJIB</div>
+        </div>
+        <div class="uniform-card-body">
+          <div class="uniform-visual">
+            <div class="uniform-emoji">👕</div>
+            <div class="uniform-color-dot-row">
+              <div class="dot" style="background:#FFFFFF; border: 1.5px solid #d1d5db;"></div>
+              <div class="dot" style="background:#1A8C8C;"></div>
+              <div class="dot" style="background:#1E3A5F;"></div>
+            </div>
+          </div>
+          <div class="uniform-info">
+            <div class="uniform-name">Seragam Putih Biru</div>
+            <div class="uniform-desc">Kemeja putih lengan pendek, celana/rok biru dongker, sepatu hitam</div>
+            <div class="uniform-tags">
+              <div class="tag tag-white">
+                <div class="tag-dot" style="background: var(--teal);"></div>
+                Hari Senin
+              </div>
+              <div class="tag tag-grey">
+                <div class="tag-dot" style="background: #9CA3AF;"></div>
+                Upacara
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="uniform-footer">
+          <span class="uniform-footer-icon">ℹ️</span>
+          <span class="uniform-footer-text">Lengkap dengan atribut topi & dasi sekolah</span>
+          <span class="uniform-footer-link">Detail →</span>
+        </div>
+      </div>
+
+      <!-- MENU GRID -->
+      <div class="menu-grid">
+        <div class="grid-row">
+          <div class="grid-item"><div class="grid-icon">📅</div><div class="grid-label">Absensi</div></div>
+          <div class="grid-item"><div class="grid-icon">📝</div><div class="grid-label">Tugas Anak</div></div>
+          <div class="grid-item"><div class="grid-icon">🕐</div><div class="grid-label">Jadwal</div></div>
+          <div class="grid-item"><div class="grid-icon">📢</div><div class="grid-label">Pengumuman</div></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-item"><div class="grid-icon">📊</div><div class="grid-label">Rapor Nilai</div></div>
+          <div class="grid-item"><div class="grid-icon">💬</div><div class="grid-label">Forum</div></div>
+          <div class="grid-item"><div class="grid-icon">💳</div><div class="grid-label">Tagihan</div></div>
+          <div class="grid-item"><div class="grid-icon">☰</div><div class="grid-label">Lainnya</div></div>
+        </div>
+      </div>
+
+      <!-- GRADES -->
+      <div class="section-title">Nilai Terbaru</div>
+      <div class="grades-card">
+        <div class="grade-row">
+          <div><div class="grade-subject">Ujian Harian Matematika</div><div class="grade-time">2 hari yang lalu</div></div>
+          <div class="grade-badge grade-green">85</div>
+        </div>
+        <div class="grade-row">
+          <div><div class="grade-subject">Tugas Sejarah</div><div class="grade-time">2 hari yang lalu</div></div>
+          <div class="grade-badge grade-amber">72</div>
+        </div>
+        <div class="grade-row">
+          <div><div class="grade-subject">Tugas PJOK</div><div class="grade-time">2 hari yang lalu</div></div>
+          <div class="grade-badge grade-green">89</div>
+        </div>
+        <button class="see-all">Lihat Semua</button>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+      <div class="nav-item active"><div class="nav-icon">🏠</div><div class="nav-label" style="color:var(--teal)">Home</div><div class="nav-active-dot"></div></div>
+      <div class="nav-item"><div class="nav-icon">🕐</div><div class="nav-label">Riwayat</div></div>
+      <div class="nav-item"><div class="nav-icon">📋</div><div class="nav-label">Homework</div></div>
+      <div class="nav-item"><div class="nav-icon">👤</div><div class="nav-label">Profile</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ANNOTATION PANEL -->
+<div class="annotation-panel">
+  <div>
+    <div class="anno-title">Uniform Card<br>UI Recommendation</div>
+    <div class="anno-subtitle">Kartu baru "Seragam Hari Ini" ditempatkan di antara kartu Absensi dan grid Menu — memberikan konteks berurutan yang alami bagi orang tua.</div>
+  </div>
+
+  <div class="anno-card">
+    <div class="anno-card-title">📐 Placement Rationale</div>
+    <div class="anno-item">
+      <div class="anno-num">1</div>
+      <div class="anno-text"><strong>Di atas Menu Grid</strong> — Informasi seragam bersifat harian & time-sensitive, sehingga perlu terlihat tanpa scroll, sama seperti Absensi.</div>
+    </div>
+    <div class="anno-item">
+      <div class="anno-num">2</div>
+      <div class="anno-text"><strong>Setelah Absensi Card</strong> — Alur logis: orang tua melihat status hadir → lalu seragam yang dipakai. Informasi saling melengkapi.</div>
+    </div>
+    <div class="anno-item">
+      <div class="anno-num">3</div>
+      <div class="anno-text"><strong>Sebelum Menu Grid</strong> — Konten kontekstual dikelompokkan di atas, navigasi fungsional di bawah. Hierarchy yang bersih.</div>
+    </div>
+  </div>
+
+  <div class="anno-card">
+    <div class="anno-card-title">🎨 Design Decisions</div>
+    <div class="anno-item">
+      <div class="anno-num">A</div>
+      <div class="anno-text"><strong>Header teal gradient</strong> — Konsisten dengan warna dominan aplikasi, sekaligus membedakan card ini dari card putih lain.</div>
+    </div>
+    <div class="anno-item">
+      <div class="anno-num">B</div>
+      <div class="anno-text"><strong>Color dots visual</strong> — Representasi warna seragam secara visual cepat, lebih intuitif daripada teks saja.</div>
+    </div>
+    <div class="anno-item">
+      <div class="anno-num">C</div>
+      <div class="anno-text"><strong>Badge WAJIB</strong> — Menandakan urgensi compliance agar orang tua tidak melewatkan informasi.</div>
+    </div>
+    <div class="anno-item">
+      <div class="anno-num">D</div>
+      <div class="anno-text"><strong>Footer info + link</strong> — Menyediakan hint tambahan (atribut topi & dasi) dan jalan masuk ke halaman detail jika dibutuhkan.</div>
+    </div>
+  </div>
+
+  <div class="anno-card">
+    <div class="anno-card-title">🔄 Card Variants by Day</div>
+    <div style="font-size: 12px; color: var(--text-mid); margin-bottom: 10px; line-height: 1.5;">Card dapat berubah otomatis sesuai hari & jadwal sekolah:</div>
+    <div class="variant-row">
+      <div class="variant-chip chip-a">👕 Putih-Biru (Senin)</div>
+      <div class="variant-chip chip-b">🟠 Pramuka (Jumat)</div>
+      <div class="variant-chip chip-c">🟢 Olahraga (Rabu)</div>
+    </div>
+    <hr class="divider" style="margin: 12px 0;">
+    <div class="color-swatch-row">
+      <div class="swatch"><div class="swatch-dot" style="background:#FFFFFF; border-color:#d1d5db;"></div>Putih</div>
+      <div class="swatch"><div class="swatch-dot" style="background:#1E3A5F;"></div>Biru Dongker</div>
+      <div class="swatch"><div class="swatch-dot" style="background:#5C4B1E;"></div>Coklat Pramuka</div>
+      <div class="swatch"><div class="swatch-dot" style="background:#1A8C8C;"></div>Hijau Olahraga</div>
+    </div>
+  </div>
+
+  <div class="anno-card">
+    <div class="anno-card-title">💡 UX Benefits</div>
+    <div class="anno-item">
+      <div class="anno-num" style="background:#F59E0B;">✓</div>
+      <div class="anno-text">Mengurangi pertanyaan orang tua ke guru tentang seragam apa yang harus dipakai.</div>
+    </div>
+    <div class="anno-item">
+      <div class="anno-num" style="background:#22C55E;">✓</div>
+      <div class="anno-text">Membantu persiapan malam sebelumnya — push notification bisa dikirim H-1.</div>
+    </div>
+    <div class="anno-item">
+      <div class="anno-num" style="background:#3B82F6;">✓</div>
+      <div class="anno-text">Mudah dikembangkan: bisa tambahkan notifikasi "besok ganti seragam" secara proaktif.</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
