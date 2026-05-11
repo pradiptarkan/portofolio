@@ -1,54 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Contact - My Portfolio</title>
-    <div id="head-placeholder"></div>
-</head>
-<body class="d-flex flex-column h-100">
-    <div class="wrapper">
-        <div id="navbar-placeholder"></div>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Get in touch with Arkan Ridho Pradipta — Business Analyst open to new opportunities.">
+<title>Contact — Arkan Ridho Pradipta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #0e0e0e;
+    --paper: #f5f2ed;
+    --paper-warm: #ede9e0;
+    --accent: #c8522a;
+    --accent-light: #f0d5c8;
+    --muted: #7a7469;
+    --border: rgba(14,14,14,0.12);
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
 
-        <section id="contact" class="container py-5">
-            <h1 class="display-4 fw-bold text-center mb-5">Get in Touch</h1>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="card p-4 p-lg-5">
-                        <p class="lead text-center mb-5">Have a question or want to work together? Fill out the form below or reach out through my social channels.</p>
-                        <form>
-                            <div class="row g-3 mb-4">
-                                <div class="col-md-6">
-                                    <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="email" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email" required>
-                                </div>
-                            </div>
-                            <div class="mb-4">
-                                <label for="subject" class="form-label">Subject</label>
-                                <input type="text" class="form-control" id="subject" placeholder="Subject" required>
-                            </div>
-                            <div class="mb-4">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" rows="6" placeholder="Your Message" required></textarea>
-                            </div>
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center mt-5 social-icons">
-                <a href="#" class="me-4 text-secondary-blue"><i class="fab fa-linkedin fa-3x"></i></a>
-                <a href="#" class="me-4 text-secondary-blue"><i class="fab fa-github fa-3x"></i></a>
-            </div>
-        </section>
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 3rem; background: rgba(245,242,237,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: var(--serif); font-size: 1.2rem; color: var(--ink); text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+  .nav-cta { background: var(--ink) !important; color: var(--paper) !important; padding: 0.45rem 1.2rem; border-radius: 100px; font-size: 0.8rem !important; font-weight: 500 !important; }
+  .nav-cta:hover { background: var(--accent) !important; }
+
+  /* HERO CONTACT */
+  .contact-hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 5rem; }
+  .contact-left { background: var(--ink); color: var(--paper); padding: 6rem 4rem; display: flex; flex-direction: column; justify-content: space-between; }
+  .contact-eyebrow { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,242,237,0.45); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.6rem; }
+  .contact-eyebrow::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: rgba(245,242,237,0.3); }
+  .contact-title { font-family: var(--serif); font-size: clamp(2.5rem, 4vw, 4.5rem); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+  .contact-title em { font-style: italic; color: var(--accent); }
+  .contact-desc { font-size: 1rem; color: rgba(245,242,237,0.5); font-weight: 300; line-height: 1.8; max-width: 380px; margin-bottom: 3rem; }
+
+  .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+  .contact-info-item { display: flex; align-items: flex-start; gap: 1rem; }
+  .contact-info-icon { width: 36px; height: 36px; border-radius: 8px; background: rgba(245,242,237,0.08); border: 1px solid rgba(245,242,237,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .contact-info-icon svg { width: 16px; height: 16px; stroke: rgba(245,242,237,0.6); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .contact-info-label { font-size: 0.72rem; color: rgba(245,242,237,0.35); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.2rem; }
+  .contact-info-value { font-size: 0.9rem; color: rgba(245,242,237,0.75); }
+  .contact-info-value a { color: rgba(245,242,237,0.75); text-decoration: none; transition: color 0.2s; }
+  .contact-info-value a:hover { color: var(--accent); }
+
+  .social-row { display: flex; gap: 0.75rem; margin-top: 3rem; }
+  .social-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; border-radius: 100px; border: 1px solid rgba(245,242,237,0.18); color: rgba(245,242,237,0.6); text-decoration: none; font-size: 0.8rem; transition: all 0.2s; }
+  .social-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .social-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* FORM SIDE */
+  .contact-right { background: var(--paper); padding: 6rem 4rem; display: flex; flex-direction: column; justify-content: center; }
+  .form-heading { font-family: var(--serif); font-size: 1.6rem; letter-spacing: -0.01em; margin-bottom: 0.5rem; }
+  .form-sub { font-size: 0.875rem; color: var(--muted); font-weight: 300; margin-bottom: 2.5rem; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-field.full { grid-column: 1 / -1; }
+  label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+  input, textarea, select {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: var(--paper-warm);
+    border: 1px solid var(--border);
+    border-radius: 0.6rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    resize: none;
+  }
+  input::placeholder, textarea::placeholder { color: rgba(122,116,105,0.5); }
+  input:focus, textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(200,82,42,0.1);
+  }
+  textarea { height: 130px; }
+  .form-submit { margin-top: 1.5rem; }
+  .btn-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.85rem 2rem;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    width: 100%;
+    justify-content: center;
+  }
+  .btn-submit:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-submit svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* note */
+  .form-note { font-size: 0.75rem; color: var(--muted); text-align: center; margin-top: 1rem; }
+  .form-note a { color: var(--accent); text-decoration: none; }
+
+  /* success state */
+  .form-success { display: none; text-align: center; padding: 3rem 2rem; }
+  .form-success .success-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--accent-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; }
+  .form-success .success-icon svg { width: 24px; height: 24px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .form-success h3 { font-family: var(--serif); font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .form-success p { color: var(--muted); font-size: 0.9rem; font-weight: 300; }
+
+  footer { background: var(--ink); border-top: 1px solid rgba(245,242,237,0.08); padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: rgba(245,242,237,0.3); }
+  footer a { color: rgba(245,242,237,0.4); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .contact-hero { grid-template-columns: 1fr; min-height: auto; }
+    .contact-left { padding: 7rem 1.5rem 3rem; }
+    .contact-right { padding: 3rem 1.5rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Arkan Ridho Pradipta</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="work.html">Experience</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html" class="nav-cta active">Get in Touch</a></li>
+  </ul>
+</nav>
+
+<main class="contact-hero">
+
+  <!-- LEFT: info -->
+  <div class="contact-left fade-up">
+    <div>
+      <div class="contact-eyebrow">Contact</div>
+      <h1 class="contact-title">Let's work<br><em>together</em></h1>
+      <p class="contact-desc">I'm currently open to new opportunities. Whether you have a project, a question, or just want to connect — reach out anytime.</p>
     </div>
 
-    <div id="footer-placeholder"></div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    <div>
+      <div class="contact-info">
+        <div class="contact-info-item">
+          <div class="contact-info-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-info-label">Email</div>
+            <div class="contact-info-value"><a href="mailto:pradiptarkan@gmail.com">pradiptarkan@gmail.com</a></div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="contact-info-label">Location</div>
+            <div class="contact-info-value">Indonesia</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <div>
+            <div class="contact-info-label">Status</div>
+            <div class="contact-info-value">Open to full-time roles</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="social-row">
+        <a href="https://github.com/pradiptarkan" class="social-btn" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+        <a href="https://linkedin.com" class="social-btn" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="CV_Arkan_Ridho_Pradipta.pdf" class="social-btn" download>
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          CV
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: form -->
+  <div class="contact-right fade-up">
+    <div id="form-wrapper">
+      <h2 class="form-heading">Send a message</h2>
+      <p class="form-sub">I typically respond within 1–2 business days.</p>
+
+      <form id="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Your name" required>
+          </div>
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-field full">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" placeholder="What's this about?" required>
+          </div>
+          <div class="form-field full">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Tell me about your project or opportunity…" required></textarea>
+          </div>
+        </div>
+        <div class="form-submit">
+          <button type="submit" class="btn-submit">
+            Send Message
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+        <p class="form-note">Or email me directly at <a href="mailto:pradiptarkan@gmail.com">pradiptarkan@gmail.com</a></p>
+      </form>
+    </div>
+
+    <div class="form-success" id="form-success">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3>Message sent!</h3>
+      <p>Thanks for reaching out. I'll get back to you within 1–2 business days.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <span>© 2025 Arkan Ridho Pradipta</span>
+  <span>Built with care · <a href="https://github.com/pradiptarkan/portofolio">View Source</a></span>
+</footer>
+
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('form-wrapper').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
