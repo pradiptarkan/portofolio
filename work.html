@@ -15,8 +15,8 @@
 <link rel="stylesheet" href="styles.css">
 <style>
   /* TIMELINE */
-  .timeline-section { padding: 5rem 4rem; max-width: 900px; margin: 0 auto; }
-  .timeline { position: relative; margin-top: 3rem; }
+  .timeline-section { padding: clamp(3rem, 6vw, 5rem) var(--gutter); max-width: 900px; margin: 0 auto; }
+  .timeline { position: relative; margin-top: clamp(2.5rem, 5vw, 3.5rem); }
   .timeline::before {
     content: '';
     position: absolute;
@@ -24,7 +24,7 @@
     width: 1px;
     background: var(--border);
   }
-  .timeline-item { padding-left: 3rem; padding-bottom: 4rem; position: relative; }
+  .timeline-item { padding-left: 3rem; padding-bottom: clamp(2.5rem, 5vw, 4rem); position: relative; }
   .timeline-item:last-child { padding-bottom: 0; }
   .timeline-dot {
     position: absolute;
@@ -41,7 +41,7 @@
     background: var(--paper);
     border: 1px solid var(--border);
     border-radius: 1rem;
-    padding: 2rem 2.25rem;
+    padding: 2rem;
     transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
   }
   .timeline-card:hover {
@@ -66,7 +66,7 @@
   .timeline-company {
     font-size: 0.875rem;
     color: var(--muted);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
     display: flex;
     align-items: center;
     gap: 0.4rem;
@@ -86,10 +86,6 @@
     position: absolute;
     left: 0; color: var(--accent);
     font-size: 0.55rem; top: 0.4rem;
-  }
-
-  @media (max-width: 900px) {
-    .timeline-section { padding: 3rem 1.5rem; }
   }
 </style>
 </head>

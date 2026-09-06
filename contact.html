@@ -14,12 +14,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-  /* CONTACT HERO */
-  .contact-hero { min-height: calc(100vh - var(--nav-height)); display: grid; grid-template-columns: 1fr 1fr; }
+  /* CONTACT HERO (mobile-first) */
+  .contact-hero { min-height: auto; display: grid; grid-template-columns: 1fr; }
   .contact-left {
     background: var(--ink);
     color: var(--paper);
-    padding: 6rem 4rem;
+    padding: calc(var(--nav-height) + 2rem) var(--gutter) 3rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -56,7 +56,7 @@
     font-weight: 300;
     line-height: 1.8;
     max-width: 380px;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
   }
   .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
   .contact-info-item { display: flex; align-items: flex-start; gap: 1rem; }
@@ -81,6 +81,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    min-height: 44px;
     padding: 0.55rem 1.1rem;
     border-radius: 100px;
     border: 1px solid rgba(245,242,237,0.18);
@@ -92,11 +93,12 @@
   .social-btn:hover { border-color: var(--accent); color: var(--accent); }
   .social-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
-  /* FORM SIDE */
-  .contact-right { background: var(--paper); padding: 6rem 4rem; display: flex; flex-direction: column; justify-content: center; }
+  /* FORM SIDE (mobile-first) */
+  .contact-right { background: var(--paper); padding: 3rem var(--gutter) clamp(4rem, 8vw, 6rem); display: flex; flex-direction: column; justify-content: center; }
   .form-heading { font-family: var(--serif); font-size: 1.6rem; letter-spacing: -0.01em; margin-bottom: 0.5rem; }
   .form-sub { font-size: 0.875rem; color: var(--muted); font-weight: 300; margin-bottom: 2.5rem; }
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+  .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+  @media (min-width: 768px) { .form-grid { grid-template-columns: 1fr 1fr; } }
   .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
   .form-field.full { grid-column: 1 / -1; }
   label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
@@ -121,6 +123,9 @@
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
+    justify-content: center;
+    width: 100%;
+    min-height: 48px;
     background: var(--ink);
     color: var(--paper);
     font-family: var(--sans);
@@ -131,8 +136,6 @@
     border: none;
     cursor: pointer;
     transition: background 0.2s, transform 0.15s;
-    width: 100%;
-    justify-content: center;
   }
   .btn-submit:hover { background: var(--accent); transform: translateY(-1px); }
   .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
@@ -177,12 +180,16 @@
   .btn-submit.loading .btn-label { opacity: 0.7; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* RESPONSIVE (page-specific) */
-  @media (max-width: 900px) {
-    .contact-hero { grid-template-columns: 1fr; min-height: auto; }
-    .contact-left { padding: calc(var(--nav-height) + 2rem) 1.5rem 3rem; }
-    .contact-right { padding: 3rem 1.5rem; }
-    .form-grid { grid-template-columns: 1fr; }
+  /* Desktop: split hero side-by-side, capped at 1440px */
+  @media (min-width: 1024px) {
+    .contact-hero {
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - var(--nav-height));
+      max-width: var(--max-w);
+      margin-inline: auto;
+    }
+    .contact-left { padding: clamp(4rem, 8vw, 6.5rem) clamp(2rem, 4vw, 4rem); }
+    .contact-right { padding: clamp(4rem, 8vw, 6.5rem) clamp(2rem, 4vw, 4rem); }
   }
 </style>
 </head>

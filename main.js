@@ -73,6 +73,29 @@
     elements.forEach(function (el) { observer.observe(el); });
   }
 
+  // ── Marquee (index only) ────────────────────────────────────────────────
+  function initMarquee() {
+    var strip = document.querySelector('.marquee-strip');
+    var inner = document.querySelector('.marquee-inner');
+    if (!strip || !inner) return;
+
+    function fitMarquee() {
+      var copy = inner.innerHTML;
+      var guard = 0;
+      // Keep enlarging so one content half is never narrower than the strip,
+      // which would otherwise expose a gap at the -50% loop point.
+      while (inner.scrollWidth < strip.clientWidth * 2 && guard < 24) {
+        inner.innerHTML += copy;
+        guard++;
+      }
+    }
+
+    fitMarquee();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(fitMarquee);
+    }
+  }
+
   // ── Footer year ─────────────────────────────────────────────────────────
   function initYear() {
     var el = document.getElementById('year');
@@ -84,6 +107,7 @@
     initNav();
     initActiveLink();
     initReveal();
+    initMarquee();
     initYear();
   });
 })();

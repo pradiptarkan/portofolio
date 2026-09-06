@@ -30,17 +30,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-  /* ── HERO ── */
+  /* ── HERO (mobile-first) ── */
+  section { padding-block: clamp(3rem, 6vw, 5rem); }
   .hero {
-    min-height: 100vh;
+    padding: var(--nav-height) 0 0;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding-top: 5rem;
+    grid-template-columns: 1fr;
+    align-items: stretch;
     overflow: hidden;
   }
-  .hero-left {
-    padding: 5rem 3rem 5rem 4rem;
+  /* Capped, centered content column — warm band stops at this edge */
+  .hero-content {
+    max-width: var(--max-w);
+    margin-inline: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+  .hero-copy {
+    padding: 1.5rem var(--gutter) 2.5rem;
     position: relative;
     z-index: 2;
   }
@@ -53,7 +62,7 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
   .hero-eyebrow::before {
     content: '';
@@ -64,11 +73,12 @@
   }
   .hero-name {
     font-family: var(--serif);
-    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
     line-height: 1.05;
     letter-spacing: -0.02em;
     color: var(--ink);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
+    overflow-wrap: break-word;
   }
   .hero-name em { font-style: italic; color: var(--accent); }
   .hero-desc {
@@ -76,15 +86,16 @@
     color: var(--muted);
     max-width: 440px;
     line-height: 1.75;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
     font-weight: 300;
   }
   .hero-actions {
     display: flex;
+    flex-direction: column;
+    align-items: stretch;
     gap: 1rem;
-    align-items: center;
-    flex-wrap: wrap;
   }
+  .hero-actions a { width: 100%; justify-content: center; }
   .hero-link {
     color: var(--ink);
     text-decoration: none;
@@ -98,18 +109,19 @@
     transition: color 0.2s, border-color 0.2s;
   }
   .hero-link:hover { color: var(--accent); border-color: var(--accent); }
-  .hero-right {
-    height: 100vh;
-    position: relative;
+  .hero-visual {
     background: var(--paper-warm);
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
+    padding: 1rem var(--gutter) 3rem;
     overflow: hidden;
   }
-  .hero-img-wrap { position: relative; width: 100%; max-width: 420px; margin: 0 auto; }
+  .hero-img-wrap { position: relative; width: min(100%, 320px); margin: 0 auto; }
   .hero-img {
     width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
     display: block;
     filter: grayscale(15%);
     mix-blend-mode: multiply;
@@ -125,20 +137,31 @@
     padding: 0.5rem 1rem;
     border-radius: 100px;
   }
-  .hero-tag-1 { top: 2rem; left: -1rem; }
-  .hero-tag-2 { bottom: 3rem; right: -1rem; background: var(--accent); }
-  .hero-bg-text {
-    position: absolute;
-    bottom: -1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: var(--serif);
-    font-size: 10rem;
-    color: rgba(14,14,14,0.04);
-    white-space: nowrap;
-    pointer-events: none;
-    letter-spacing: -0.05em;
-    font-style: italic;
+  .hero-tag-1 { top: 1rem; left: 1rem; }
+  .hero-tag-2 { bottom: 1rem; right: 1rem; background: var(--accent); }
+
+  /* Actions → row, image → 420px */
+  @media (min-width: 480px) {
+    .hero-actions { flex-direction: row; align-items: center; flex-wrap: wrap; }
+    .hero-actions a { width: auto; }
+    .hero-img-wrap { width: min(100%, 420px); }
+  }
+
+  /* Desktop: two-column hero */
+  @media (min-width: 1024px) {
+    .hero-content { grid-template-columns: 1.2fr 0.8fr; padding-inline: var(--gutter); }
+    .hero-copy {
+      padding: clamp(1.5rem, 4vw, 2.5rem) clamp(2rem, 4vw, 4rem) 2.5rem 0;
+    }
+    .hero-visual {
+      padding: 0;
+      background: var(--paper-warm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-img-wrap { width: min(100%, 480px); }
   }
 
   /* ── MARQUEE STRIP ── */
@@ -167,15 +190,25 @@
     to { transform: translateX(-50%); }
   }
 
-  /* ── ABOUT ── */
-  #about {
+  /* ── AT A GLANCE (mobile-first) ── */
+  #at-a-glance {
     background: var(--paper-warm);
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 5rem;
-    align-items: start;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: center;
   }
-  .about-stats {
+  @media (min-width: 1024px) {
+    #at-a-glance { grid-template-columns: 1fr 1fr; gap: clamp(3rem, 5vw, 4.5rem); }
+  }
+  .glance-copy p {
+    color: var(--muted);
+    font-weight: 300;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    margin-bottom: 1.5rem;
+  }
+  .glance-stats {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1px;
@@ -183,9 +216,8 @@
     border: 1px solid var(--border);
     border-radius: 1rem;
     overflow: hidden;
-    margin-top: 2rem;
   }
-  .stat-cell { background: var(--paper-warm); padding: 1.5rem; text-align: center; }
+  .stat-cell { background: var(--paper-warm); padding: 2rem 1.5rem; text-align: center; }
   .stat-num {
     font-family: var(--serif);
     font-size: 2.8rem;
@@ -195,140 +227,6 @@
     display: block;
   }
   .stat-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; letter-spacing: 0.05em; }
-  .about-body p {
-    color: var(--muted);
-    font-weight: 300;
-    line-height: 1.85;
-    margin-bottom: 1.2rem;
-    font-size: 1.05rem;
-  }
-  .about-body p strong { color: var(--ink); font-weight: 500; }
-
-  /* ── EXPERTISE ── */
-  #expertise { background: var(--paper); }
-  .expertise-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-  .expertise-card {
-    border: 1px solid var(--border);
-    border-radius: 1rem;
-    padding: 2rem;
-    background: var(--paper);
-    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-  .expertise-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-  }
-  .expertise-card:hover::before { transform: scaleX(1); }
-  .expertise-card:hover {
-    border-color: rgba(200,82,42,0.3);
-    transform: translateY(-3px);
-    box-shadow: 0 16px 40px rgba(14,14,14,0.08);
-  }
-  .expertise-num {
-    font-family: var(--serif);
-    font-size: 3rem;
-    color: rgba(14,14,14,0.06);
-    line-height: 1;
-    margin-bottom: 1rem;
-    font-style: italic;
-  }
-  .expertise-icon {
-    width: 40px;
-    height: 40px;
-    background: var(--accent-light);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.25rem;
-  }
-  .expertise-icon svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-  .expertise-card h3 {
-    font-family: var(--serif);
-    font-size: 1.3rem;
-    margin-bottom: 0.75rem;
-    letter-spacing: -0.01em;
-  }
-  .expertise-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
-  .expertise-list li {
-    font-size: 0.875rem;
-    color: var(--muted);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .expertise-list li::before {
-    content: '';
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--accent);
-    flex-shrink: 0;
-  }
-
-  /* ── EDUCATION ── */
-  #education { background: var(--paper-warm); }
-  .edu-card {
-    max-width: 760px;
-    background: var(--paper);
-    border: 1px solid var(--border);
-    border-radius: 1.25rem;
-    padding: 2.5rem;
-    margin-top: 3rem;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 2rem;
-    align-items: start;
-  }
-  .edu-year {
-    font-family: var(--serif);
-    font-size: 1rem;
-    color: var(--accent);
-    font-style: italic;
-    white-space: nowrap;
-    padding-top: 0.2rem;
-    border-right: 1px solid var(--border);
-    padding-right: 2rem;
-  }
-  .edu-body h3 {
-    font-family: var(--serif);
-    font-size: 1.4rem;
-    margin-bottom: 0.3rem;
-    letter-spacing: -0.01em;
-  }
-  .edu-school { font-size: 0.875rem; color: var(--muted); margin-bottom: 0.75rem; }
-  .edu-gpa {
-    display: inline-block;
-    background: var(--accent-light);
-    color: var(--accent);
-    font-size: 0.75rem;
-    font-weight: 500;
-    padding: 0.25rem 0.75rem;
-    border-radius: 100px;
-    letter-spacing: 0.04em;
-    margin-bottom: 1rem;
-  }
-  .edu-thesis {
-    font-size: 0.875rem;
-    color: var(--muted);
-    font-style: italic;
-    line-height: 1.6;
-    border-left: 2px solid var(--accent-light);
-    padding-left: 1rem;
-  }
 
   /* ── CONTACT ── */
   #contact {
@@ -344,7 +242,7 @@
     font-size: 1rem;
     color: rgba(245,242,237,0.55);
     max-width: 460px;
-    margin: 1rem auto 3rem;
+    margin: 0.25rem auto clamp(2.5rem, 5vw, 3.5rem);
     font-weight: 300;
     line-height: 1.8;
   }
@@ -371,15 +269,100 @@
   .contact-btn-outline { border: 1px solid rgba(245,242,237,0.25); color: var(--paper); }
   .contact-btn-outline:hover { border-color: rgba(245,242,237,0.6); background: rgba(245,242,237,0.08); }
 
-  /* ── RESPONSIVE (page-specific) ── */
-  @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; min-height: auto; }
-    .hero-left { padding: calc(var(--nav-height) + 3rem) 1.5rem 3rem; }
-    .hero-right { height: 55vw; }
-    #about { grid-template-columns: 1fr; gap: 2rem; }
-    .expertise-grid { grid-template-columns: 1fr; }
-    .edu-card { grid-template-columns: 1fr; gap: 1rem; }
-    .edu-year { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 1rem; padding-right: 0; }
+  /* ── FEATURED WORK (mobile-first) ── */
+  #featured-work { background: var(--paper); }
+  .featured-intro {
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 480px;
+    margin: 0.25rem 0 clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 768px) { .featured-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .featured-grid { grid-template-columns: repeat(3, 1fr); } }
+  .featured-card {
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: var(--paper);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .featured-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .featured-card:hover::before { transform: scaleX(1); }
+  .featured-card:hover {
+    border-color: rgba(200,82,42,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(14,14,14,0.08);
+  }
+  .featured-num {
+    font-family: var(--serif);
+    font-size: 3rem;
+    color: rgba(14,14,14,0.06);
+    line-height: 1;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+  .featured-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .featured-title {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.9rem;
+  }
+  .featured-title em { font-style: italic; color: var(--accent); }
+  .featured-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.7;
+    flex: 1;
+  }
+  .featured-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .featured-year { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.04em; }
+  .featured-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--ink);
+    transition: color 0.2s;
+  }
+  .featured-card:hover .featured-link { color: var(--accent); }
+  .featured-link svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Keep the marquee alive even when the OS/browser prefers reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-inner {
+      animation-duration: 22s !important;
+      animation-iteration-count: infinite !important;
+    }
   }
 </style>
 </head>
@@ -392,7 +375,7 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
   <ul class="nav-links" id="nav-links">
-    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html" class="active">Home</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="work.html">Experience</a></li>
     <li><a href="projects.html">Projects</a></li>
@@ -402,31 +385,34 @@
 
 <!-- HERO -->
 <section class="hero" aria-label="Introduction">
-  <div class="hero-left">
-    <div class="hero-eyebrow">Digital Product &amp; Business Analyst</div>
-    <h1 class="hero-name">
-      Arkan<br><em>Ridho</em><br>Pradipta
-    </h1>
-    <p class="hero-desc">
-      Bridging the gap between complex technical systems and strategic business goals — with 3+ years in telecommunications and digital platforms.
-    </p>
-    <div class="hero-actions">
-      <a href="projects.html" class="btn-primary">
-        View My Work
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-      <a href="CV_Arkan_Ridho_Pradipta.pdf" class="hero-link" download>
-        Download CV
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      </a>
+  <div class="hero-content">
+    <div class="hero-copy">
+      <p class="hero-eyebrow">Digital Product &amp; Business Analyst</p>
+      <h1 class="hero-name">
+        <span>Arkan</span>
+        <em>Ridho</em>
+        <span>Pradipta</span>
+      </h1>
+      <p class="hero-desc">
+        Bridging the gap between complex technical systems and strategic business goals — with 3+ years in telecommunications and digital platforms.
+      </p>
+      <div class="hero-actions">
+        <a href="projects.html" class="btn-primary">
+          View My Work
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="CV_Arkan_Ridho_Pradipta.pdf" class="hero-link" download="">
+          Download CV
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </a>
+      </div>
     </div>
-  </div>
-  <div class="hero-right">
-    <div class="hero-bg-text" aria-hidden="true">Analyst</div>
-    <div class="hero-img-wrap">
-      <img src="https://avatars.githubusercontent.com/u/172613538?v=4" class="hero-img" alt="Portrait of Arkan Ridho Pradipta">
-      <span class="hero-tag hero-tag-1">Based in Indonesia</span>
-      <span class="hero-tag hero-tag-2">Open to Work</span>
+    <div class="hero-visual">
+      <div class="hero-img-wrap">
+        <img src="assets/arkan.webp" class="hero-img" alt="Portrait of Arkan Ridho Pradipta" width="800" height="1000" fetchpriority="high">
+        <span class="hero-tag hero-tag-1">Indonesia</span>
+        <span class="hero-tag hero-tag-2">Open to Work</span>
+      </div>
     </div>
   </div>
 </section>
@@ -453,105 +439,94 @@
   </div>
 </div>
 
-<!-- ABOUT -->
-<section id="about" aria-labelledby="about-title">
-  <div class="about-left fade-up">
-    <div class="section-label">Who I am</div>
-    <h2 class="section-title" id="about-title">The person<br>behind the <em>work</em></h2>
-    <div class="about-stats">
-      <div class="stat-cell">
-        <span class="stat-num">3+</span>
-        <div class="stat-label">Years Experience</div>
-      </div>
-      <div class="stat-cell">
-        <span class="stat-num">IT</span>
-        <div class="stat-label">Industry Focus</div>
-      </div>
-      <div class="stat-cell">
-        <span class="stat-num">BA</span>
-        <div class="stat-label">Core Role</div>
-      </div>
-      <div class="stat-cell">
-        <span class="stat-num">QA</span>
-        <div class="stat-label">Also Practiced</div>
-      </div>
-    </div>
+<!-- AT A GLANCE -->
+<section id="at-a-glance" aria-labelledby="glance-title">
+  <div class="glance-copy fade-up">
+    <div class="section-label">At a glance</div>
+    <h2 class="section-title" id="glance-title">Short on sell —<br>long on <em>delivery</em></h2>
+    <p>3+ years as a Business Analyst, Technical Writer, and QA — turning ambiguous asks into documented, buildable requirements.</p>
+    <a href="about.html" class="btn-link-arrow">
+      Read the full story
+      <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
   </div>
-  <div class="about-body fade-up">
-    <p>With over <strong>3 years of experience</strong> in the IT industry as a Business Analyst, Technical Writer, and Quality Assurance professional, I excel in developing systems tailored to user needs.</p>
-    <p>My technical writing expertise enables me to efficiently <strong>identify customer requirements</strong>, while my quality assurance background allows me to anticipate potential issues, ensuring seamless project execution.</p>
-    <p>I am particularly drawn to the intersection of <strong>telecommunications, digital platforms, and product strategy</strong> — spaces where clarity of thought directly translates to better user outcomes.</p>
-    <div style="margin-top: 2rem;">
-      <a href="contact.html" class="btn-primary" style="display: inline-flex;">Let's Connect →</a>
+  <div class="glance-stats fade-up">
+    <div class="stat-cell">
+      <span class="stat-num">3+</span>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">4</span>
+      <div class="stat-label">Companies</div>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">BA</span>
+      <div class="stat-label">Core Role</div>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">QA</span>
+      <div class="stat-label">Also Practiced</div>
     </div>
   </div>
 </section>
 
-<!-- EXPERTISE -->
-<section id="expertise" aria-labelledby="expertise-title">
+<!-- FEATURED WORK -->
+<section id="featured-work" aria-labelledby="featured-title">
   <div class="fade-up">
-    <div class="section-label">Skills</div>
-    <h2 class="section-title" id="expertise-title">My <em>expertise</em></h2>
-    <p style="color: var(--muted); max-width: 480px; font-weight: 300; margin-top: 0.5rem;">A structured blend of technical foundation, product tools, and analytical thinking.</p>
+    <div class="section-label">Selected Work</div>
+    <h2 class="section-title" id="featured-title">Featured <em>projects</em></h2>
+    <p class="featured-intro">Selected case studies across requirements analysis, technical documentation, and quality assurance.</p>
   </div>
-  <div class="expertise-grid">
-    <div class="expertise-card fade-up">
-      <div class="expertise-num" aria-hidden="true">01</div>
-      <div class="expertise-icon">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-      </div>
-      <h3>Technical Foundation</h3>
-      <ul class="expertise-list">
-        <li>SQL</li>
-        <li>PHP</li>
-        <li>HTML &amp; CSS</li>
-      </ul>
-    </div>
-    <div class="expertise-card fade-up">
-      <div class="expertise-num" aria-hidden="true">02</div>
-      <div class="expertise-icon">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      </div>
-      <h3>Product &amp; Management</h3>
-      <ul class="expertise-list">
-        <li>Figma</li>
-        <li>Postman</li>
-        <li>Asana / Odoo Project</li>
-        <li>Microsoft Office Suite</li>
-      </ul>
-    </div>
-    <div class="expertise-card fade-up">
-      <div class="expertise-num" aria-hidden="true">03</div>
-      <div class="expertise-icon">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="21"/><line x1="3" y1="12" x2="9" y2="12"/><line x1="15" y1="12" x2="21" y2="12"/></svg>
-      </div>
-      <h3>Analysis &amp; Design</h3>
-      <ul class="expertise-list">
-        <li>UML Diagramming</li>
-        <li>draw.io / Lucidchart</li>
-        <li>Adobe Creative Suite</li>
-        <li>CorelDraw</li>
-      </ul>
-    </div>
-  </div>
-</section>
+  <div class="featured-grid">
 
-<!-- EDUCATION -->
-<section id="education" aria-labelledby="education-title">
-  <div class="fade-up">
-    <div class="section-label">Background</div>
-    <h2 class="section-title" id="education-title">Education</h2>
-  </div>
-  <div class="edu-card fade-up">
-    <div class="edu-year">May 2022</div>
-    <div class="edu-body">
-      <h3>Bachelor of Information System</h3>
-      <p class="edu-school">University of Atma Jaya Yogyakarta</p>
-      <span class="edu-gpa">GPA 2.83 / 4.00</span>
-      <p class="edu-thesis">
-        Final Paper: Analisis Faktor Penerimaan Teknologi Aplikasi Microsoft Teams untuk Karyawan PT. United Tractors dengan Model UTAUT
-      </p>
-    </div>
+    <a href="project-gotjob.html" class="featured-card fade-up">
+      <div class="featured-num" aria-hidden="true">01</div>
+      <div class="featured-tags">
+        <span class="case-tag">Business Analysis</span>
+      </div>
+      <h3 class="featured-title">GotJob — Requirements &amp; <em>FSD</em></h3>
+      <p class="featured-desc">FSD and API documentation for a recruitment platform, guiding engineers through the full delivery cycle.</p>
+      <div class="featured-footer">
+        <span class="featured-year">2023 — 2024</span>
+        <span class="featured-link">
+          Read Case Study
+          <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <a href="project-digipos.html" class="featured-card fade-up">
+      <div class="featured-num" aria-hidden="true">02</div>
+      <div class="featured-tags">
+        <span class="case-tag">Technical Writing</span>
+      </div>
+      <h3 class="featured-title">DigiPOS — Technical <em>Documentation</em></h3>
+      <p class="featured-desc">FSD, TSD, and API documentation for a digital point-of-sale platform, standardizing docs across the org.</p>
+      <div class="featured-footer">
+        <span class="featured-year">2022 — 2023</span>
+        <span class="featured-link">
+          Read Case Study
+          <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <a href="project-talentvis.html" class="featured-card fade-up">
+      <div class="featured-num" aria-hidden="true">03</div>
+      <div class="featured-tags">
+        <span class="case-tag">QA</span>
+      </div>
+      <h3 class="featured-title">Talentvis — QA &amp; <em>SDLC Docs</em></h3>
+      <p class="featured-desc">Full SDLC documentation and structured QA across product lines, moving bugs from discovery to resolution.</p>
+      <div class="featured-footer">
+        <span class="featured-year">2021 — 2022</span>
+        <span class="featured-link">
+          Read Case Study
+          <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </span>
+      </div>
+    </a>
+
   </div>
 </section>
 
