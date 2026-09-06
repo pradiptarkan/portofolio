@@ -21,6 +21,7 @@
     grid-template-columns: 1fr;
     gap: 2.5rem;
     align-items: start;
+    padding-block: clamp(2rem, 5vw, 3.5rem);
   }
   @media (min-width: 768px) {
     .profile-section { grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: clamp(3rem, 6vw, 5rem); }
@@ -77,9 +78,12 @@
   }
   .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.4rem; letter-spacing: 0.04em; }
 
-  /* EXPERTISE (mobile-first) */
-  #expertise { background: var(--paper); }
-  .expertise-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+  /* EXPERTISE (mobile-first) — warm band so it reads clearly off the profile section */
+  #expertise {
+    background: var(--paper-warm);
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+  }
+  .expertise-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-top: clamp(2rem, 4vw, 3rem); }
   @media (min-width: 768px) { .expertise-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1024px) { .expertise-grid { grid-template-columns: repeat(3, 1fr); } }
   .expertise-card {
@@ -122,8 +126,13 @@
   .expertise-list li { font-size: 0.875rem; color: var(--muted); display: flex; align-items: center; gap: 0.5rem; }
   .expertise-list li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
 
-  /* EDUCATION (mobile-first) */
-  #education { background: var(--paper-warm); }
+  /* EDUCATION (mobile-first) — distinct band so it reads clearly off #expertise */
+  #education {
+    background: var(--accent-light);
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+  }
+  #education .section-title em { color: var(--ink); }
+  #education .edu-card { color: var(--ink); }
   .edu-card {
     background: var(--paper);
     border: 1px solid var(--border);
@@ -134,7 +143,7 @@
     grid-template-columns: 1fr;
     gap: 1.25rem;
     align-items: start;
-    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
   }
   @media (min-width: 768px) {
     .edu-card { grid-template-columns: auto 1fr; gap: 2.5rem; }
@@ -222,7 +231,7 @@
 <!-- PROFILE -->
 <section class="profile-section" aria-labelledby="profile-title">
   <div class="profile-photo-wrap fade-up">
-    <img src="https://avatars.githubusercontent.com/u/172613538?v=4" alt="Portrait of Arkan Ridho Pradipta" class="profile-photo">
+    <img src="assets/arkan.webp" alt="Portrait of Arkan Ridho Pradipta" class="profile-photo">
     <span class="profile-badge">
       <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>
       Open to Opportunities
