@@ -1,6 +1,29 @@
 /* ==========================================================================
    PORTFOLIO — DESIGN SYSTEM / SHARED STYLES
-   Single source of truth for all pages.
+   Single source of truth for ALL pages. Each page also has a small
+   <style> block with page-specific rules (labeled per section).
+
+   ── FILE MAP ────────────────────────────────────────────────────────────
+   1. Design tokens          → colors, fonts, spacing, layout caps  (:root)
+   2. Header heights         → --nav-height per breakpoint
+   3. Container + Reset      → caps/centers content at 1440px
+   4. Navigation             → mobile bar + panel, desktop row, active state
+   5. Buttons                → btn-primary / btn-outline / btn-link-arrow /
+                               btn-accent  (touch targets ≥ 44px)
+   6. Section primitives     → section, section-label, section-title,
+                               page-header
+   7. Footer
+   8. Animations             → fade-up reveal
+   9. Case study / project   → case-* components (shared by project-*.html)
+
+   ── QUICK EDITS ─────────────────────────────────────────────────────────
+   · Change brand color  → --accent in :root
+   · Change background   → --paper / --paper-warm / --ink in :root
+   · Change fonts        → --serif / --sans in :root
+   · Change section gaps → the "section padding" rules in Section primitives
+   · Change breakpoints  → the @media (min-width: ...) blocks
+
+   Full how-to guide: open instruction.txt in the project root.
    ========================================================================== */
 
 /* ── Design tokens ─────────────────────────────────────────────────────── */
@@ -310,6 +333,7 @@ a { color: inherit; }
 /* Cap page content at 1440px and keep it centered on ultra-wide screens. */
 section { max-width: var(--max-w); margin-inline: auto; }
 
+/* Vertical rhythm for every page: tighten/loosen here and all pages follow. */
 section {
   padding-block: clamp(3.5rem, 8vw, 6rem);
   padding-inline: var(--gutter);

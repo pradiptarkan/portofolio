@@ -1,0 +1,268 @@
+===============================================================
+ ARKAN RIDHO PRADIPTA — PORTFOLIO MAINTENANCE GUIDE
+===============================================================
+
+This file explains EVERYTHING that lives in the code so you can
+change anything in the future without breaking the site.
+
+---------------------------------------------------------------
+ 1. WHAT THE SITE IS BUILT WITH
+---------------------------------------------------------------
+- Plain HTML + CSS + JavaScript. No build step, no framework.
+- One shared stylesheet  -> styles.css   (design system for ALL pages)
+- One shared script      -> main.js       (nav, animations, marquee, year)
+- Each HTML page has a tiny <style> block for page-specific CSS.
+- Everything is responsive (mobile-first) — written for phones first,
+  then enhanced at larger widths.
+
+---------------------------------------------------------------
+ 2. FILE MAP
+---------------------------------------------------------------
+| File                    | What it is                              |
+|-------------------------|------------------------------------------|
+| index.html              | Home page (Hero, Marquee, Featured Work, |
+|                         | At a Glance, Contact)                    |
+| about.html              | About Me (profile, stats, skills, edu)   |
+| work.html               | Experience timeline                      |
+| projects.html           | Projects grid + filter tabs              |
+| contact.html            | Contact form + info (Web3Forms)          |
+| project-gotjob.html     | Case study: GotJob                       |
+| project-digipos.html    | Case study: DigiPOS                      |
+| project-talentvis.html  | Case study: Talentvis                    |
+| styles.css              | SHARED design system (read this first)  |
+| main.js                 | SHARED behavior (nav + animations)      |
+| assets/arkan.webp       | Your hero photo (800x1000)               |
+| CV_Arkan_Ridho_Pradipta.pdf | Downloadable CV                     |
+| robots.txt, sitemap.xml | SEO files (for search engines)           |
+
+---------------------------------------------------------------
+ 3. COLORS, FONTS, SPACING  (styles.css → "Design tokens")
+---------------------------------------------------------------
+Open styles.css and look at the :root block near the top. These are
+the ONLY place to change the look of the whole site:
+
+    --ink           main text / dark surfaces   (#0e0e0e)
+    --paper         main background             (#f5f2ed)
+    --paper-warm    secondary background        (#ede9e0)
+    --accent        brand/orange                (#c8522a)
+    --accent-light  light orange tint           (#f0d5c8)
+    --muted         secondary text              (#7a7469)
+    --border        hairlines / borders         (rgba 12%)
+
+  HOW TO: change the brand color
+     1. Edit --accent (and --accent-light if needed).
+     2. Done — every button, tag, underline, and heading accent updates.
+
+  HOW TO: change fonts
+     Edit --serif (headings, uses Instrument Serif) and/or
+     --sans (body, uses DM Sans). Font files are loaded from Google
+     Fonts in the <head> of every HTML page.
+
+  HOW TO: change spacing globally
+     --space-* tokens define the spacing scale.
+     The "--gutter" value controls side padding (16px mobile → 48px desktop).
+     The "section" padding rules control vertical space between sections
+     (see item 4).
+
+---------------------------------------------------------------
+ 4. LAYOUT & RESPONSIVE RULES  (styles.css)
+---------------------------------------------------------------
+- Content is capped at 1440px wide, centered on very wide screens
+  (`--max-w`). Reading columns use `--max-w-content` (1200px).
+- Breakpoints used everywhere (mobile-first, min-width):
+    +480px  → tablets narrow
+    +768px  → tablets / small laptops
+    +1024px → laptops / desktop
+    +1280px → wide desktop
+- Sections: `section { padding-block: clamp(3.5rem, 8vw, 6rem) }`
+  means "no less than 3.5rem, no more than 6rem, scales with screen".
+  HOW TO: tighten section spacing site-wide → lower the numbers here.
+  HOW TO: tighten ONE page → override in that page's <style> block
+          (about.html does this with `padding-block: clamp(2rem,5vw,3.5rem)`).
+- Nav height is fluid: --nav-height = 64px → 80px across breakpoints.
+  Never hardcode pixel nav heights in page CSS — use var(--nav-height).
+
+---------------------------------------------------------------
+ 5. NAVIGATION  (in every HTML file + styles.css)
+---------------------------------------------------------------
+- The same <nav class="nav"> markup is copied in every page.
+  Make sure every page gets the SAME nav if you add a link.
+- Active page is marked automatically by main.js (adds .active).
+  It animates: accent bar (mobile) / underline (desktop).
+  HOW TO: add a new page to the menu
+     1. Create the page (copy an existing one).
+     2. Paste the same nav markup, add your <li><a href="yourpage.html">…</a>.
+     3. The active underline works automatically.
+
+---------------------------------------------------------------
+ 6. PAGES & SECTIONS — the rules every page follows
+---------------------------------------------------------------
+- Every <style> block is organized into labeled sections like:
+      /* PROFILE SPLIT (mobile-first) */
+      /* STATS ROW (mobile-first) */
+  Keep this style when you add code — labels = easy maintenance.
+- Every content block in the <body> has an HTML comment above it:
+      <!-- HERO -->, <!-- AT A GLANCE -->, ...
+- Sections use aria-label / aria-labelledby for accessibility.
+  HOW TO: add a new section to a page
+     1. Add <section id="your-id" aria-labelledby="your-title">.
+     2. Inside: <div class="section-label">Kicker</div> and
+        <h2 class="section-title" id="your-title">Heading</h2>.
+     3. Add your content. CSS comes free from styles.css.
+     4. Write the rules in that page's <style> block (or styles.css
+        if the section repeats on several pages).
+
+---------------------------------------------------------------
+ 7. BUTTONS  (styles.css → "Buttons")
+---------------------------------------------------------------
+classes (use as-is, don't write your own buttons):
+    btn-primary     solid dark pill   (48px tall)
+    btn-outline     outlined pill     (48px tall)
+    btn-accent      orange pill       (48px tall)
+    btn-link-arrow  text link w/ arrow (44px tall)
+Touch targets are already ≥ 44px (mobile-friendly).
+  HOW TO: change button radius, padding, or hover → styles.css Buttons block.
+
+---------------------------------------------------------------
+ 8. HOME PAGE — HERO  (index.html)
+---------------------------------------------------------------
+Structure:
+    <section class="hero">
+      <div class="hero-content">      <- caps at 1440px, adds gutters
+        <div class="hero-copy">       <- left text column
+          eyebrow, name, description, action buttons
+        </div>
+        <div class="hero-visual">     <- warm band + your photo
+          .hero-img-wrap (photo + floating tags)
+        </div>
+      </div>
+    </section>
+  HOW TO: change the hero text → edit inside .hero-copy.
+  HOW TO: change the photo → replace assets/arkan.webp (keep ~800x1000).
+  HOW TO: change the floating badges (Indonesia / Open to Work)
+          → edit .hero-tag-1 / .hero-tag-2 text and CSS in index.html.
+
+---------------------------------------------------------------
+ 9. MARQUEE STRIP  (index.html)
+---------------------------------------------------------------
+The scrolling "Business Analysis ✦ Technical Writing ✦ …" strip.
+  HOW TO: add/reorder skills → edit the <span> items inside
+          <div class="marquee-inner"> (repeat the set once for the loop).
+JS in main.js auto-duplicates content so the loop never shows a gap.
+The animation keeps running even with reduced-motion (by design).
+
+---------------------------------------------------------------
+ 10. STATS  (index.html "At a Glance" + about.html "Stats row")
+---------------------------------------------------------------
+Each stat is:
+    <div class="stat-cell"><span class="stat-num">3+</span>
+    <div class="stat-label">Years Experience</div></div>
+  HOW TO: change numbers/labels → edit these text strings.
+Grid handles 1→2→4 columns automatically.
+
+---------------------------------------------------------------
+ 11. PROJECTS & FEATURED WORK  (projects.html + index.html)
+---------------------------------------------------------------
+Card pattern (self-explanatory classes):
+    <article class="project-card">
+      thumb / tags / title / description / footer (year + link)
+    </article>
+  HOW TO: add a project
+     1. Copy an existing card.
+     2. Edit tags, title, description, year, and link.
+     3. Cards flow 1 → 2 → 3 columns automatically.
+Filters on projects.html work off data-* attributes —
+  HOW TO: add a new filter category
+     1. Add <button class="filter-btn" data-filter="web">Web</button>.
+     2. Set data-category="web" on the matching cards.
+     3. The JS wiring is in projects.html's script at the bottom.
+(Filter logic is kept inside projects.html — easy to find.)
+
+---------------------------------------------------------------
+ 12. CASE STUDIES  (project-*.html)
+---------------------------------------------------------------
+Shared layout from styles.css ("Case study" section):
+    .case-studies-header   hero of the case
+    .case-layout           facts sidebar (sticky on desktop) + body
+    .case-facts            quick facts box
+    .case-section          numbered content blocks (h2 with .num)
+    .case-cta              bottom "let's work together" banner
+Some sections show a [TBD] placeholder until real content is added.
+  HOW TO: fill a [TBD]
+     Look for <span class="case-tbd">…</span> in project-*.html and
+     replace the placeholder with real text. Keep the same structure.
+
+---------------------------------------------------------------
+ 13. CONTACT FORM  (contact.html)
+---------------------------------------------------------------
+Uses Web3Forms — no backend needed. The access key lives in the form
+hidden input at the top of <form>:
+    <input type="hidden" name="access_key" value="d513c5ba-fbe5-4549-bf53-a7445c9bb7f2">
+  HOW TO: use a different inbox
+     1. Change the "from" email / recipient in the form fields
+        (subject, from_name, and the key above).
+     2. First live test: visit https://web3forms.com → send a test
+        message to confirm your email is approved.
+Messages arrive in your email. Client-side validation is in the
+<script> at the bottom of contact.html.
+
+---------------------------------------------------------------
+ 14. FOOTER & YEAR  (every page)
+---------------------------------------------------------------
+The © year automatically updates via main.js (#year element).
+  HOW TO: change footer text → edit the <footer class="footer"> markup.
+
+---------------------------------------------------------------
+ 15. CV / DOWNLOADS
+---------------------------------------------------------------
+Replace CV_Arkan_Ridho_Pradipta.pdf when you get a new one —
+keep the same file name so all links keep working.
+
+---------------------------------------------------------------
+ 16. PERFORMANCE NOTES (do not "fix")
+---------------------------------------------------------------
+- img tags in .hero carry width/height + fetchpriority="high" — that
+  prevents layout shift; keep them.
+- aspect-ratio on images (hero 4/5, project thumbs 16/9) does the
+  cropping — resize/re-crop with those ratios in mind.
+
+---------------------------------------------------------------
+ 17. RUNNING LOCALLY / CHECKING
+---------------------------------------------------------------
+Validation + smoke test scripts are created/run from the tooling
+directory the developer uses (C:\Users\pradi\AppData\Local\Temp\opencode\):
+
+    node "…\validate.js"                       # HTML/CSS/route checks
+    node "…\server.js" "C:\Users\pradi\Portofolio"   # local server + smoke test
+
+  HOW TO: preview on your machine
+     Run the server script above, open the printed local URL, resize
+     the browser window to test 320 / 480 / 768 / 1024 / 1440px.
+     Hard-refresh (Ctrl+F5) after edits to bypass cache.
+
+---------------------------------------------------------------
+ 18. DEPLOYING TO GITHUB PAGES
+---------------------------------------------------------------
+GitHub Pages publishes from the main branch automatically after you push.
+  HOW TO: release a change
+     git add .
+     git commit -m "describe the change"
+     git push
+  Wait ~1 minute, then hard-refresh:
+     https://pradiptarkan.github.io/portofolio/
+Push only when you are happy — the live site updates on every push.
+
+---------------------------------------------------------------
+ 19. GOLDEN RULES (follow these when editing)
+---------------------------------------------------------------
+1. Mobile first: write styles for small screens, then add
+   @media (min-width: …) to improve larger screens.
+2. Small screens never get horizontal scroll — if it appears, fix
+   the layout, don't add overflow-x:hidden.
+3. Put shared styling in styles.css; page-only styling stays in the
+   page's <style> block.
+4. Label every CSS block and HTML section you add.
+5. Use existing classes/buttons instead of creating new ones.
+6. Keep touch targets ≥ 44px for buttons.
+7. Don't hardcode nav height — use var(--nav-height).
+8. Test at least 320px and 1024px before deploying.
