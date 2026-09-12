@@ -188,6 +188,19 @@ Shared layout from styles.css ("Case study" section):
     .case-facts            quick facts box
     .case-section          numbered content blocks (h2 with .num)
     .case-cta              bottom "let's work together" banner
+
+  Reading rhythm (shared, DO NOT override per page):
+    Body text in .case-section is capped at 68ch with margin-bottom
+    1.25rem (headings, paragraphs, lists all use the same gap). The
+    section gap (2.5-3.5rem) separates chapters. All case pages inherit
+    this — no <style> block needed in project-*.html at all.
+
+  HOW TO: add a new case study page
+     Copy project-talentvis-accounting.html as the template (it is the
+     cleanest model): same head, nav, case-* markup, and NO <style>.
+     Fill hero, quick facts, and the numbered case sections. Keep every
+     block as <section class="case-section fade-up"> with an h2 + .num.
+     Never add page-level CSS — spacing lives in styles.css.
 Some sections show a [TBD] placeholder until real content is added.
   HOW TO: fill a [TBD]
      Look for <span class="case-tbd">…</span> in project-*.html and

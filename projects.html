@@ -95,15 +95,6 @@
   .empty-state { display: none; text-align: center; padding: 4rem 1rem; }
   .empty-state.show { display: block; }
   .empty-state p { color: var(--muted); font-weight: 300; font-size: 0.95rem; }
-
-  /* CTA BANNER (mobile-first) */
-  .cta-banner { margin: 0 var(--gutter) clamp(3rem, 6vw, 5rem); background: var(--ink); border-radius: 1.5rem; padding: 2.5rem var(--gutter); display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 2rem; }
-  @media (min-width: 768px) {
-    .cta-banner { flex-direction: row; align-items: center; padding: clamp(2.5rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 4rem); }
-  }
-  .cta-banner-title { font-family: var(--serif); font-size: 2rem; color: var(--paper); letter-spacing: -0.01em; }
-  .cta-banner-title em { font-style: italic; color: var(--accent); }
-  .cta-banner-sub { font-size: 0.9rem; color: rgba(245,242,237,0.45); margin-top: 0.4rem; font-weight: 300; }
 </style>
 </head>
 <body>
@@ -222,6 +213,35 @@
       <div class="project-footer">
         <span class="project-year">2021 — 2022</span>
         <a href="project-talentvis.html" class="btn-link-arrow">
+          Read Case Study
+          <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </article>
+
+  <!-- Project 4: Talentvis Accounting -->
+  <article class="project-card fade-up" data-category="tw">
+    <a href="project-talentvis-accounting.html" class="project-thumb" aria-label="Read the Internal Accounting System case study">
+      <svg class="project-thumb-pattern" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs><pattern id="p4" width="40" height="40" patternUnits="userSpaceOnUse"><rect x="10" y="10" width="20" height="20" fill="none" stroke="#a83310" stroke-width="0.6"/></pattern></defs>
+        <rect width="400" height="200" fill="url(#p4)"/>
+      </svg>
+      <div class="project-thumb-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+    </a>
+    <div class="project-body">
+      <div class="project-tags">
+        <span class="project-tag">Technical Writing</span>
+        <span class="project-tag">FSD</span>
+        <span class="project-tag">TSD</span>
+      </div>
+      <h2 class="project-title">Internal Accounting System — Technical <em>Documentation</em></h2>
+      <p class="project-desc">Created the FSD and TSD documentation from scratch for an existing company-wide finance web application at Talentvis, turning knowledge held only by the development team into a written reference.</p>
+      <div class="project-footer">
+        <span class="project-year">2021 — 2022</span>
+        <a href="project-talentvis-accounting.html" class="btn-link-arrow">
           Read Case Study
           <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
