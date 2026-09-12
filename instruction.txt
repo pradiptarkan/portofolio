@@ -46,8 +46,6 @@ the ONLY place to change the look of the whole site:
     --paper-warm    secondary background        (#ede9e0)
     --accent        brand/orange                (#a83310 — AA-safe: ≥4.5:1)
     --accent-light  light orange tint           (#f0d5c8)
-    --accent-bright lighter orange for dark     (#dc7a4c — used ONLY for
-                  surface hovers, e.g. footer)   hover states on dark bg)
     --muted         secondary text              (#7a7469)
     --border        hairlines / borders         (rgba 12%)
 
@@ -70,7 +68,7 @@ the ONLY place to change the look of the whole site:
  4. LAYOUT & RESPONSIVE RULES  (styles.css)
 ---------------------------------------------------------------
 - Content is capped at 1440px wide, centered on very wide screens
-  (`--max-w`). Reading columns use `--max-w-content` (1200px).
+  (`--max-w`).
 - Breakpoints used everywhere (mobile-first, min-width):
     +480px  → tablets narrow
     +768px  → tablets / small laptops

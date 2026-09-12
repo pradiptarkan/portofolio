@@ -95,11 +95,7 @@
       // Keep enlarging so one content half is never narrower than the strip,
       // which would otherwise expose a gap at the -50% loop point.
       while (inner.scrollWidth < strip.clientWidth * 2 && guard < 24) {
-        if (template.content && template.content.cloneNode) {
-          inner.appendChild(template.content.cloneNode(true));
-        } else {
-          inner.innerHTML += template.innerHTML; // legacy fallback
-        }
+        inner.appendChild(template.content.cloneNode(true));
         guard++;
       }
     }
