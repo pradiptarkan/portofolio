@@ -309,7 +309,7 @@
   }
   .featured-card:hover::before { transform: scaleX(1); }
   .featured-card:hover {
-    border-color: rgba(200,82,42,0.3);
+    border-color: rgba(168,51,16,0.3);
     transform: translateY(-3px);
     box-shadow: 0 16px 40px rgba(14,14,14,0.08);
   }
@@ -357,16 +357,13 @@
   .featured-card:hover .featured-link { color: var(--accent); }
   .featured-link svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-  /* Keep the marquee alive even when the OS/browser prefers reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    .marquee-inner {
-      animation-duration: 22s !important;
-      animation-iteration-count: infinite !important;
-    }
-  }
+  /* Reduced-motion: the marquee is governed by the shared reduce rule
+     in styles.css, which stops the animation (WCAG 2.2.2). Do NOT
+     re-enable it here with !important — that defeats the preference. */
 </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- NAV -->
 <nav class="nav" aria-label="Main navigation">
@@ -375,13 +372,15 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
   <ul class="nav-links" id="nav-links">
-    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="index.html">Home</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="work.html">Experience</a></li>
     <li><a href="projects.html">Projects</a></li>
     <li><a href="contact.html" class="nav-cta">Get in Touch</a></li>
   </ul>
 </nav>
+
+<main id="main">
 
 <!-- HERO -->
 <section class="hero" aria-label="Introduction">
@@ -550,6 +549,8 @@
     </a>
   </div>
 </section>
+
+</main>
 
 <footer class="footer">
   <span>© <span id="year">2026</span> Arkan Ridho Pradipta</span>

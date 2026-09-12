@@ -116,7 +116,7 @@
     resize: none;
   }
   input::placeholder, textarea::placeholder { color: rgba(122,116,105,0.5); }
-  input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,82,42,0.1); }
+  input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(168,51,16,0.1); }
   textarea { height: 130px; }
   .form-submit { margin-top: 1.5rem; }
   .btn-submit {
@@ -151,7 +151,7 @@
   .form-field.invalid .field-error { display: block; }
   .form-status { display: none; font-size: 0.85rem; margin-top: 1rem; padding: 0.85rem 1rem; border-radius: 0.6rem; }
   .form-status.error { display: block; background: #fdecea; color: #a93226; border: 1px solid #f5c6cb; }
-  .form-status.success { display: block; background: var(--accent-light); color: var(--accent); border: 1px solid rgba(200,82,42,0.3); }
+  .form-status.success { display: block; background: var(--accent-light); color: var(--accent); border: 1px solid rgba(168,51,16,0.3); }
 
   /* success panel */
   .form-success { display: none; text-align: center; padding: 3rem 2rem; }
@@ -194,6 +194,7 @@
 </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
 
 <!-- NAV -->
 <nav class="nav" aria-label="Main navigation">
@@ -210,7 +211,7 @@
   </ul>
 </nav>
 
-<main class="contact-hero">
+<main class="contact-hero" id="main">
 
   <!-- LEFT: info -->
   <div class="contact-left fade-up">
@@ -279,22 +280,22 @@
         <div class="form-grid">
           <div class="form-field" id="field-name">
             <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" required>
+            <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" required aria-describedby="error-name">
             <span class="field-error" id="error-name">Please enter your name.</span>
           </div>
           <div class="form-field" id="field-email">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="your@email.com" autocomplete="email" required>
+            <input type="email" id="email" name="email" placeholder="your@email.com" autocomplete="email" required aria-describedby="error-email">
             <span class="field-error" id="error-email">Please enter a valid email address.</span>
           </div>
           <div class="form-field full" id="field-subject">
             <label for="subject">Subject</label>
-            <input type="text" id="subject" name="subject" placeholder="What's this about?" required>
+            <input type="text" id="subject" name="subject" placeholder="What's this about?" required aria-describedby="error-subject">
             <span class="field-error" id="error-subject">Please enter a subject.</span>
           </div>
           <div class="form-field full" id="field-message">
             <label for="message">Message</label>
-            <textarea id="message" name="message" placeholder="Tell me about your project or opportunity…" required></textarea>
+            <textarea id="message" name="message" placeholder="Tell me about your project or opportunity…" required aria-describedby="error-message"></textarea>
             <span class="field-error" id="error-message">Please enter a message.</span>
           </div>
         </div>
@@ -316,11 +317,11 @@
       </form>
     </div>
 
-    <div class="form-success" id="form-success">
+    <div class="form-success" id="form-success" role="status" aria-live="polite">
       <div class="success-icon">
         <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <h3>Message sent!</h3>
+      <h3 tabindex="-1">Message sent!</h3>
       <p>Thanks for reaching out. I'll get back to you within 1–2 business days.</p>
     </div>
   </div>
@@ -344,7 +345,13 @@
 
   function setFieldError(fieldId, hasError) {
     var field = document.getElementById('field-' + fieldId);
+    var input = document.getElementById(fieldId);
     if (field) field.classList.toggle('invalid', hasError);
+    if (input) {
+      // Expose the error state to assistive tech (also wired via aria-describedby)
+      if (hasError) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+    }
   }
 
   function validate(field) {
@@ -383,6 +390,8 @@
     if (!validateAll()) {
       statusBox.textContent = 'Please fix the highlighted fields and try again.';
       statusBox.className = 'form-status error';
+      var firstInvalid = document.querySelector('.form-field.invalid input, .form-field.invalid textarea');
+      if (firstInvalid) firstInvalid.focus();
       return;
     }
 
@@ -402,6 +411,9 @@
       if (result.success) {
         wrapper.style.display = 'none';
         successPanel.style.display = 'block';
+        // Move focus into the success panel so SR + keyboard users hear the outcome
+        var heading = successPanel.querySelector('h3');
+        if (heading) heading.focus();
       } else {
         throw new Error(result.message || 'Submission failed');
       }

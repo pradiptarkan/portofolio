@@ -44,8 +44,10 @@ the ONLY place to change the look of the whole site:
     --ink           main text / dark surfaces   (#0e0e0e)
     --paper         main background             (#f5f2ed)
     --paper-warm    secondary background        (#ede9e0)
-    --accent        brand/orange                (#c8522a)
+    --accent        brand/orange                (#a83310 — AA-safe: ≥4.5:1)
     --accent-light  light orange tint           (#f0d5c8)
+    --accent-bright lighter orange for dark     (#dc7a4c — used ONLY for
+                  surface hovers, e.g. footer)   hover states on dark bg)
     --muted         secondary text              (#7a7469)
     --border        hairlines / borders         (rgba 12%)
 
@@ -149,7 +151,8 @@ The scrolling "Business Analysis ✦ Technical Writing ✦ …" strip.
   HOW TO: add/reorder skills → edit the <span> items inside
           <div class="marquee-inner"> (repeat the set once for the loop).
 JS in main.js auto-duplicates content so the loop never shows a gap.
-The animation keeps running even with reduced-motion (by design).
+It stops when the visitor prefers reduced motion (WCAG 2.2.2).
+Do NOT re-enable it with !important — index.html documents this.
 
 ---------------------------------------------------------------
  10. STATS  (index.html "At a Glance" + about.html "Stats row")
@@ -204,7 +207,14 @@ hidden input at the top of <form>:
      2. First live test: visit https://web3forms.com → send a test
         message to confirm your email is approved.
 Messages arrive in your email. Client-side validation is in the
-<script> at the bottom of contact.html.
+<script> at the bottom of contact.html (also does aria-invalid + focus
+management for accessibility).
+
+  IMPORTANT — spam protection (do not skip): the access_key is public by
+  design (it's in the HTML). Visit https://web3forms.com → your form →
+  enable (a) domain restrictions to your GitHub Pages URL and
+  (b) "Google reCAPTCHA" (v3, invisible) or the built-in spam check.
+  The honeypot (botcheck) field is already present in the form.
 
 ---------------------------------------------------------------
  14. FOOTER & YEAR  (every page)
@@ -266,3 +276,8 @@ Push only when you are happy — the live site updates on every push.
 6. Keep touch targets ≥ 44px for buttons.
 7. Don't hardcode nav height — use var(--nav-height).
 8. Test at least 320px and 1024px before deploying.
+9. Accessibility is built-in — don't remove: the skip-to-content link
+   (first element of <body>), the <main id="main"> landmark, aria-invalid
+   on form fields, focus management, or the reduced-motion rules.
+10. All pages are wired for keyboard only: nav closes on Escape and
+    returns focus to the toggle.

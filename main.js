@@ -13,6 +13,11 @@
     var links = document.getElementById('nav-links');
     if (!toggle || !links) return;
 
+    function closeMenu() {
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+
     toggle.addEventListener('click', function () {
       var isOpen = links.classList.toggle('open');
       toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
@@ -20,17 +25,19 @@
 
     // Close the menu when a link is chosen (mobile)
     links.addEventListener('click', function (e) {
-      if (e.target.closest('a')) {
-        links.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
+      if (e.target.closest('a')) closeMenu();
     });
 
     // Close on outside click
     document.addEventListener('click', function (e) {
-      if (!e.target.closest('.nav')) {
-        links.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
+      if (!e.target.closest('.nav')) closeMenu();
+    });
+
+    // Close on Escape and return focus to the toggle button
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && links.classList.contains('open')) {
+        closeMenu();
+        toggle.focus();
       }
     });
   }
@@ -80,12 +87,19 @@
     if (!strip || !inner) return;
 
     function fitMarquee() {
-      var copy = inner.innerHTML;
+      // Parse the label set ONCE, then clone nodes — much cheaper than
+      // repeatedly parsing new innerHTML strings.
+      var template = document.createElement('template');
+      template.innerHTML = inner.innerHTML.trim();
       var guard = 0;
       // Keep enlarging so one content half is never narrower than the strip,
       // which would otherwise expose a gap at the -50% loop point.
       while (inner.scrollWidth < strip.clientWidth * 2 && guard < 24) {
-        inner.innerHTML += copy;
+        if (template.content && template.content.cloneNode) {
+          inner.appendChild(template.content.cloneNode(true));
+        } else {
+          inner.innerHTML += template.innerHTML; // legacy fallback
+        }
         guard++;
       }
     }

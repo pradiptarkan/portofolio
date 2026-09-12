@@ -31,8 +31,12 @@
   --ink: #0e0e0e;
   --paper: #f5f2ed;
   --paper-warm: #ede9e0;
-  --accent: #c8522a;
+  /* Brand accent — #a83310 is the AA-safe version of the original
+     #c8522a: ≥4.5:1 on paper and accent-light (small text/buttons). */
+  --accent: #a83310;
   --accent-light: #f0d5c8;
+  /* Light accent for hover states on DARK surfaces (e.g. footer links). */
+  --accent-bright: #dc7a4c;
   --muted: #7a7469;
   --border: rgba(14, 14, 14, 0.12);
   --serif: 'Instrument Serif', Georgia, serif;
@@ -109,6 +113,28 @@ a { color: inherit; }
   outline-offset: 2px;
   border-radius: 2px;
 }
+
+/* ── Skip-to-content (WCAG 2.4.1 — first focusable element on every page) ── */
+.skip-link {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transform: translateY(-300%);
+  transition: transform 0.2s ease;
+}
+.skip-link:focus-visible { transform: none; }
+.skip-link:not(:focus) { clip-path: inset(50%); clip: rect(0 0 0 0); overflow: hidden; white-space: nowrap; }
+
+/* Landmark content: brings the scroll target below the fixed nav. */
+main { scroll-margin-top: calc(var(--nav-height) + 1rem); }
 
 /* ── Navigation (mobile-first) ─────────────────────────────────────────── */
 .nav {
@@ -439,7 +465,7 @@ section {
   color: rgba(245, 242, 237, 0.3);
 }
 .footer a { color: rgba(245, 242, 237, 0.4); text-decoration: none; }
-.footer a:hover { color: var(--accent); }
+.footer a:hover { color: var(--accent-bright); }
 @media (min-width: 768px) {
   .footer {
     flex-direction: row;
@@ -547,7 +573,7 @@ section {
 @media (min-width: 1024px) {
   .case-facts { position: sticky; top: calc(var(--nav-height) + 2rem); }
 }
-.case-facts h3 {
+.case-facts .case-facts-title {
   font-family: var(--serif);
   font-size: 1.1rem;
   margin-bottom: 1.25rem;
